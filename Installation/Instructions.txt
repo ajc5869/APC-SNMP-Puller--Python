@@ -1,18 +1,18 @@
 1. Make sure you are at the root of the Installation folder. Run the following commands (copy and paste line by line):
-sudo apt-get update
-sudo apt-get install vim
-sudo apt-get install snmp
-sudo apt-get install libsnmp-base
-sudo apt-get install snmp-mibs-downloader
-sudo apt-get install python-pip
+sudo apt-get update -y
+sudo apt-get install vim -y
+sudo apt-get install snmp -y
+sudo apt-get install libsnmp-base -y
+sudo apt-get install snmp-mibs-downloader -y
+sudo apt-get install python-pip -y
 sudo pip install virtualenv
 sudo pip install setuptools
 sudo pip install Flask
 sudo pip install pathlib
-mkdir ~/.snmp
-cp snmp.conf ~/.snmp
-cp powernet417.mib ~/.snmp
-vim ~/.snmp/snmp.conf
+mkdir ~/snmp
+cp snmp.conf ~/snmp
+cp powernet417.mib ~/snmp
+vim ~/snmp/snmp.conf
 
 2. Replace USERNAME_GOES_HERE with your current username. If you are unsure of your username run 'whoami' in terminal and rerun the vim command above.
 

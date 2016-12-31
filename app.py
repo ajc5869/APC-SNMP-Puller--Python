@@ -15,14 +15,14 @@ CONST_COMMUNITY_STRING = "public"
 
 
 def main(ip_address, query_id):
-		#GrabNParseFuncs.write_date(ip_address, query_id)
-		GrabNParseFuncs.write_ip(ip_address, query_id)
-		if GrabNParseFuncs.get_apc_name(ip_address, query_id) == "Error":
-			return
-		GrabNParseFuncs.get_apc_model(ip_address, query_id)
-		#GrabNParseFuncs.get_apc_serial(ip_address, query_id)
-		GrabNParseFuncs.get_bank_load(ip_address, query_id)
-		GrabNParseFuncs.get_outlet_status(ip_address, query_id)
+	#GrabNParseFuncs.write_date(ip_address, query_id)
+	GrabNParseFuncs.write_ip(ip_address, query_id)
+	if GrabNParseFuncs.get_apc_name(ip_address, query_id) == "Error":
+		return
+	GrabNParseFuncs.get_apc_model(ip_address, query_id)
+	#GrabNParseFuncs.get_apc_serial(ip_address, query_id)
+	GrabNParseFuncs.get_bank_load(ip_address, query_id)
+	GrabNParseFuncs.get_outlet_status(ip_address, query_id)
 
 
 @app.route("/")
@@ -30,7 +30,7 @@ def test():
 	return render_template("index.html", ip_address=CONST_SERVER_IP)
 
 
-@app.route("/dev/<ip_address>", methods=['GET', 'POST'])
+@app.route("/dev/<ip_address>", methods=['GET'])
 def run_me(ip_address):
 	query_id = str(uuid.uuid1())
 	Path("outputs/" + query_id + ".html").touch()

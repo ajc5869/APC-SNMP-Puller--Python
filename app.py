@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import uuid
 import GrabNParseFuncs
+import socket
 
 app = Flask(__name__)
 
@@ -56,10 +57,27 @@ def ip_range(ip_range):
 	fourth_octet = octet_list[3]
 	last_ip = octet_list[4]
 
+
+	first_address = str(first_octet) + "." + str(second_octet) + "." + str(third_octet) + "." + str(fourth_octet)
+	second_address = str(first_octet) + "." + str(second_octet) + "." + str(third_octet) + "." + str(last_ip)
+
 	if last_ip >= 255 or last_ip <= 0:
 		return render_template("invalid_ip_range.html")
 
 	if fourth_octet > last_ip:
+		return render_template("invalid_ip_range.html")
+
+
+	try:
+		socket.inet_aton(first_address)
+
+	except socket.error:
+		return render_template("invalid_ip_range.html")
+
+	try:
+		socket.inet_aton(second_address)
+
+	except socket.error:
 		return render_template("invalid_ip_range.html")
 
 	query_id = str(uuid.uuid1())

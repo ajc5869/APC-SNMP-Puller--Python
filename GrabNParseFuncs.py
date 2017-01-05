@@ -17,6 +17,7 @@ def write_date(ip_address, query_id):
 	file.write("<p><u><b>Last Query:</u></b> " + str(datetime.datetime.now()) + "</p>")
 	file.close()
 
+
 def get_apc_name(ip_address, query_id):
 	try:
 		for APCName in re.compile('"[^"]*"').findall(str(subprocess.check_output("snmpget -v1 -Cf -c " + CONST_COMMUNITY_STRING + " " + ip_address + " sPDUMasterConfigPDUName.0",shell=True))):
@@ -42,6 +43,7 @@ def get_apc_model(ip_address, query_id):
 	except subprocess.CalledProcessError as e:
 		return "Error"
 
+
 def get_apc_serial(ip_address, query_id):
 	try:
 		for APCSerial in re.compile('"[^"]*"').findall(str(subprocess.check_output("snmpget -v1 -Cf -c " + CONST_COMMUNITY_STRING + " " + ip_address + " sPDUIdentSerialNumber.0",shell=True))):
@@ -53,10 +55,12 @@ def get_apc_serial(ip_address, query_id):
 	except subprocess.CalledProcessError as e:
 		return "Error"
 
+
 def write_ip(ip_address, query_id):
 	file = open("outputs/" + query_id + ".html",'a')
 	file.write("<u><b>IP:</u></b> " + ip_address + '<span style="margin-left:1em">')
 	file.close()
+
 
 def get_num_outlets(ip_address, query_id):
 	try:
@@ -66,6 +70,7 @@ def get_num_outlets(ip_address, query_id):
 		return(int(num_outlets))
 	except subprocess.CalledProcessError as e:
 		return "Error"
+
 
 def get_num_banks(ip_address, query_id):
 	try:
@@ -77,6 +82,7 @@ def get_num_banks(ip_address, query_id):
 
 	except subprocess.CalledProcessError as e:
 		return "Error"
+
 
 def get_bank_load(ip_address, query_id):
 	try:
@@ -106,6 +112,7 @@ def get_bank_load(ip_address, query_id):
 			starting_bank_index += 1
 	except subprocess.CalledProcessError as e:
 		return "Error"
+
 
 def get_outlet_status(ip_address, query_id):
 	on_outlets = []
@@ -145,6 +152,7 @@ def get_outlet_status(ip_address, query_id):
 	except subprocess.CalledProcessError as e:
 		return "Error"
 
+
 def ip_extractor(ip_range, octet_list):
 	split_ip = ip_range.split("-")
 	
@@ -152,8 +160,8 @@ def ip_extractor(ip_range, octet_list):
 	second_octet = split_ip[0].split(".")[1]
 	third_octet = split_ip[0].split(".")[2]
 	fourth_octet = split_ip[0].split(".")[3]
-
 	right_side = split_ip[1]
 	
 	octet_list.extend([int(first_octet), int(second_octet), int(third_octet), int(fourth_octet), int(right_side)])
+
 	return octet_list

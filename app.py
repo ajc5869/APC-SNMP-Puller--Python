@@ -39,10 +39,16 @@ def run_me(ip_address):
 	if len(ip_address) > 15 or len(ip_address) < 7:
 		return render_template("invalid_ip_range.html")
 
+	try:
+		socket.inet_aton(ip_address)
+	except socket.error:
+		return render_template("invalid_ip_range.html")
+
 	main(ip_address, query_id)
 	final_out = open("outputs/" + query_id + ".html", 'r').read()
 	return final_out
 	final_out.close()
+
 
 @app.route("/range/<ip_range>")
 def ip_range(ip_range):
@@ -51,15 +57,15 @@ def ip_range(ip_range):
 		GrabNParseFuncs.ip_extractor(ip_range, octet_list)
 	except:
 		return render_template("invalid_ip_range.html")
+
 	first_octet = octet_list[0]
 	second_octet = octet_list[1]
 	third_octet = octet_list[2]
 	fourth_octet = octet_list[3]
 	last_ip = octet_list[4]
-
-
 	first_address = str(first_octet) + "." + str(second_octet) + "." + str(third_octet) + "." + str(fourth_octet)
 	second_address = str(first_octet) + "." + str(second_octet) + "." + str(third_octet) + "." + str(last_ip)
+
 
 	if last_ip >= 255 or last_ip <= 0:
 		return render_template("invalid_ip_range.html")
@@ -70,29 +76,26 @@ def ip_range(ip_range):
 
 	try:
 		socket.inet_aton(first_address)
-
 	except socket.error:
 		return render_template("invalid_ip_range.html")
 
 	try:
 		socket.inet_aton(second_address)
-
 	except socket.error:
 		return render_template("invalid_ip_range.html")
 
+
 	query_id = str(uuid.uuid1())
 	Path("outputs/" + query_id + ".html").touch()
-
 	file = open("outputs/" + query_id + ".html", 'a')
-
 	file.write("<p><u><b>Requested IP Range:</u></b> " + str(first_octet) + "." + str(second_octet) + "." + str(third_octet) + "." + str(fourth_octet) + "-" + str(last_ip) + "</p>")
 	file.write("<p>-</p>")
 	file.close()
 
 	while fourth_octet <= last_ip:
 		main(str(first_octet) + "." + str(second_octet) + "." + str(third_octet) + "." + str(fourth_octet), query_id)
-		
 		fourth_octet += 1
+
 	final_out = open("outputs/" + query_id + ".html", 'r').read()
 	return final_out
 	final_out.close()

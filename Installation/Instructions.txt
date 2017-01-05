@@ -14,7 +14,7 @@ cp snmp.conf ~/.snmp
 cp powernet417.mib ~/.snmp
 vim ~/.snmp/snmp.conf
 
-2. Replace USERNAME_GOES_HERE with your current username. If you are unsure of your username run 'whoami' in terminal and rerun the vim command above.
+2. Replace USERNAME_GOES_HERE with your current username. If you are unsure of your username run 'whoami' in terminal
 
 3. To run the utility go to the root of the APCApp folder and run the following command:
 sudo python app.py
